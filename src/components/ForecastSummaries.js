@@ -11,15 +11,15 @@ const ForecastSummaries = (props) => {
                     key={forecast.date}
                     date={forecast.date}
                     description={forecast.description}
+                    icon={forecast.icon}
                     temperature={forecast.temperature}
-                    onSelect={onForecastSelect}
                 />
             ))}
         </div>
     );
 };
 
-ForecastSummaries.PropTypes = {
+ForecastSummaries.propTypes = {
     forecasts: PropTypes.arrayOf.isRequired,
     onSelect: PropTypes.func.isRequired
 };
