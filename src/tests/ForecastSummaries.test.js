@@ -24,8 +24,16 @@ describe("ForecastSummary", () => {
         },   
     ];
     
-    it("renders correctly", () => {
+    xit("renders correctly", () => {
         const { asFragment } = render(<ForecastSummaries forecasts={validProps} />);
         expect(asFragment()).toMatchSnapshot();
+    });
+
+    it("renders the correct number of ForecastSummary instances", () => {
+        const { getAllByTestId } = render(
+            <ForecastSummaries forecasts={validProps} />
+        );
+
+        expect(getAllByTestId("forecast-summary")).toHaveLength(2);
     });
 });

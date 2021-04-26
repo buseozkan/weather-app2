@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import ForecastSummary from "./ForecastSummary";
+import '../styles/ForecastSummaries.css';
 
 const ForecastSummaries = (props) => {
-    const { forecasts } = props;
+    const { forecasts, onForecastSelect } = props;
     return (
         <div className="forecast-summaries">
             {forecasts.map((forecast) => (
@@ -13,6 +14,7 @@ const ForecastSummaries = (props) => {
                     description={forecast.description}
                     icon={forecast.icon}
                     temperature={forecast.temperature}
+                    onSelect={onForecastSelect}
                 />
             ))}
         </div>
