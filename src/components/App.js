@@ -1,39 +1,42 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
-import React from 'react';
-import PropTypes from 'prop-types';
+/* eslint-disable  no-unused-vars */
+
+import React, { useState, useEffect } from 'react';
 import '../styles/App.css';
 import LocationDetails from "./LocationDetails";
 import ForecastSummaries from "./ForecastSummaries";
+//import ForecastDetails from './ForecastDetails';
+import getForecasts from "../requests/getForecast";
 
+const App = () => {
+  const [forecasts, setForecasts] = useState([]);
+  const [location, setLocation] = useState({ city: "", country: "" });
+  const [selectedDate, setSelectedDate] = useState(0);
 
-const App = (props) => {
-  const { forecasts, location } = props;
+  useEffect(() => {
+    getForecasts(setSelectedDate, setForecasts, setLocation);
+  }, []);
+
+  const selectedForecast = forecasts.find(
+    (forecast) => forecast.date === selectedDate
+  );
+
+  const handleForecastSelect = (date) => {
+    setSelectedDate(date);
+  };
+
+  
   return (
     <div className="weather-app ">
       <LocationDetails city={location.city} country={location.country} />
-      <ForecastSummaries forecasts={forecasts} />
+      <ForecastSummaries forecasts={forecasts}
+        onForecastSelect={handleForecastSelect}
+      />
+      
     </div>
   );
 };
 
-
-App.propTypes = {
-  forecasts: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.number,
-      description: PropTypes.string,
-      icon: PropTypes.number,
-      temperature: PropTypes.shape({
-        min: PropTypes.number,
-        max: PropTypes.number,
-      }),
-    })
-  ).isRequired,
-  location: PropTypes.shape({
-    city: PropTypes.string,
-    country: PropTypes.string,
-  }).isRequired,
-};
 
 
 export default App;
